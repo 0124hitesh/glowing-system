@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
-import './card.css'
 
 export default function Card(props) {
 
@@ -39,10 +38,13 @@ export default function Card(props) {
 
         axios.post('/newSong', fdata).then((res) => {
             console.log(res.data)
+            alert("Song Inserted")
         }).catch((e) => {
             console.log(e)
+            alert("Error")
         })
-        props.p();
+        await props.p();
+        
     }
 
     async function setImage(e) {

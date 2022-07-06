@@ -3,19 +3,48 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import { Navbar, Container, Table, Form, FormControl, Button } from 'react-bootstrap';
 import axios from 'axios';
 import Card from './card';
+import './card.css'
+
 import ReactStars from "react-rating-stars-component";
+import laodingScreen from '../assets/loading.gif'
 
 
 export default function A() {
     var [songList, setList] = useState([]);
     var [newSong, setNewSong] = useState(false);
+    var [laodingGIF, setLoad] = useState(true)
 
     useEffect(() => {
         axios.get('/songs').then(async (res) => {
-            setList((res.data)[0]);
+            setList((res.data)[0])
+            setLoad(false)
             console.log('a')
         })
     }, [])
+
+    const showList = (
+        <tbody>
+            {songList.map((x, index) => {
+                const z = arrayBufferToBase64(x.pic.data.data)
+                const imgSrc = "data:image/jpg;base64," + z
+                return (
+                    <tr key={index}>
+                        <td><img src={imgSrc} alt="imag" style={{ width: "100px", height: "100px" }} /></td>
+                        <td>{x.song}</td>
+                        <td>{x.rd}</td>
+                        <td>{x.artist}</td>
+                        <td>
+                            <ReactStars
+                                count={5}
+                                value={x.ratings}
+                                size={24}
+                                activeColor="#ffd700" />
+                        </td>
+                    </tr>
+                )
+            })}
+        </tbody>
+    )
 
     function show() {
         setNewSong(
@@ -69,32 +98,13 @@ export default function A() {
                         <th>Release Date</th>
                         <th>Artist</th>
                         <th>Rate</th>
-
                     </tr>
                 </thead>
-                <tbody>
-                    {songList.map((x, index) => {
-                        const z = arrayBufferToBase64(x.pic.data.data)
-                        const imgSrc = "data:image/jpg;base64," + z
-                        return (
-                            <tr key={index}>
-                                <td><img src={imgSrc} alt="imag" style={{width:"100px", height:"100px"}} /></td>
-                                <td>{x.song}</td>
-                                <td>{x.rd}</td>
-                                <td>{x.artist}</td>
-                                <td>
-                                    <ReactStars
-                                        count={5}
-                                        value={x.ratings}
-                                        size={24}
-                                        activeColor="#ffd700" />
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
+                {showList}
+
             </Table>
 
+            {laodingGIF ? <img src={laodingScreen} alt="imag" style={{ width: "370px", height: "250px" }} className="loadingImage" /> : null}
             {newSong ? <Card p={show} /> : null}
         </>
     )
