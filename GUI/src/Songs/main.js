@@ -15,14 +15,18 @@ export default function A() {
     var [laodingGIF, setLoad] = useState(true)
 
     useEffect(() => {
+        getSongs();
+    }, [])
+
+    function getSongs(){
         axios.get('/songs').then(async (res) => {
             setList((res.data)[0])
             setLoad(false)
             console.log('a')
         })
-    }, [])
+    }
 
-    const showList = (
+    var showList = (
         <tbody>
             {songList.map((x, index) => {
                 const z = arrayBufferToBase64(x.pic.data.data)
@@ -105,7 +109,7 @@ export default function A() {
             </Table>
 
             {laodingGIF ? <img src={laodingScreen} alt="imag" style={{ width: "370px", height: "250px" }} className="loadingImage" /> : null}
-            {newSong ? <Card p={show} /> : null}
+            {newSong ? <Card p1={show} p2={getSongs} /> : null}
         </>
     )
 }

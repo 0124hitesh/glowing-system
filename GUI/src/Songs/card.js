@@ -43,8 +43,8 @@ export default function Card(props) {
             console.log(e)
             alert("Error")
         })
-        await props.p();
-        
+        props.p1();
+        props.p2();
     }
 
     async function setImage(e) {
@@ -66,7 +66,7 @@ export default function Card(props) {
                     Song <input type="text" value={song} onChange={f_song}></input><br /><br />
                     Release Date <input type="date" value={rd} onChange={f_rd}></input><br /><br />
                     Ratings <input type="number" max={5} min={1} value={ratings} onChange={f_ratings}></input><br /><br />
-                    <button type="button" onClick={props.p}>Cancel </button>
+                    <button type="button" onClick={props.p1}>Cancel </button>
                     <span> </span>
                     <button type="button" onClick={addSong}> ADD USER</button>
                 </form>
