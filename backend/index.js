@@ -81,7 +81,7 @@ app.post('/newSong', upload.single("pic"), async (req, res) => {
         res.send("Failed")
         return;
     }
-    console.log(req.body.pic)
+    // console.log(req.body.pic)
     const d = new sc({
         pic: {
             data: fs.readFileSync(path.join(__dirname + '/images/' + req.file.filename)),
@@ -116,7 +116,7 @@ app.put('/newArtist', (req, res) => {
             else {
                 d.map(async (x) => {
                     await x.songs.push(req.body.song)
-                    console.log(x)
+                    // console.log(x)
                     ac.updateOne({ artist: art }, { $set: { songs: x.songs } }).then(() => {})
                     res.send("Updated")
                 })
