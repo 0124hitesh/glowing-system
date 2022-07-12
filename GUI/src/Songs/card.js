@@ -32,19 +32,21 @@ export default function Card(props) {
 
         fdata.append("pic", pic);
         fdata.append("artist", artist);
-        fdata.append("song", song)
+        fdata.append("song", song);
         fdata.append("rd", rd)
-        fdata.append("ratings", ratings)
+        fdata.append("ratings", ratings);
 
-        axios.post('/newSong', fdata).then((res) => {
+        await axios.post('/newSong', fdata).then((res) => {
             console.log(res.data)
+            props.p2();
             alert("Song Inserted")
         }).catch((e) => {
             console.log(e)
             alert("Error")
         })
+
         props.p1();
-        props.p2();
+        
     }
 
     async function setImage(e) {
