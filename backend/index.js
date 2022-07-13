@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 const express = require('express');
 const formData = require("express-form-data");
-const multer = require("multer");
 const fs = require('fs')
 const path = require('path');
 
+// sc -- songCollection
+const {sc, upload}= require('./models/songs')
+
+// ac -- artistCollection
+const ac = require('./models/artist')
 
 mongoose.connect('mongodb://127.0.0.1:27017/y_DB', { useNewUrlParser: true, useUnifiedTopology: true }).
     then(() => console.log("Connectedd")).catch((e) => { console.log(e) });
@@ -30,40 +34,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-const imgstorage =   multer.diskStorage({  
-    destination: function (req, file, callback) {  
-      callback(null, './images');  
-    },  
-    filename: function (req, file, callback) {  
-      callback(null, file.originalname);  
-    }  
-  });  
-  
-const upload = multer({ storage : imgstorage});  
-
-
-  
-const songSchema = new mongoose.Schema({
-    pic: {
-        data: Buffer, 
-        contentType: String
-     },
-    artist: { type: String },
-    song: String,
-    rd: { type: Date, default: Date.now },
-    ratings: Number
-});
-
-const artistSchema = new mongoose.Schema({
-    artist: { type: String },
-    songs: { type: Array, default: [] }
-})
-
-// sc -- songCollection
-const sc = new mongoose.model("songs", songSchema);
-
-// ac -- artistCollection
-const ac = new mongoose.model("artists", artistSchema)
 
 app.get('/songs', async (req, res) => {
     var arr = [];
