@@ -39,7 +39,8 @@ app.get('/songs', async (req, res) => {
     var arr = [];
     await sc.find({}).sort({ratings: -1}).then((d) => {
         arr.push(d)
-        // console.log(d.pic)
+        arr.push(d.length)
+        // console.log(d.length)
     })
     .catch(() => console.log("error"))
 

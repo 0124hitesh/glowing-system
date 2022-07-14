@@ -12,22 +12,37 @@ import laodingScreen from '../assets/loading.gif'
 export default function A() {
     var [songList, setList] = useState([]);
     var [newSong, setNewSong] = useState(false);
-    var [laodingGIF, setLoad] = useState(true)
+    var [laodingGIF, setLoad] = useState(true);
+    var [totalItems, setItems] = useState();
 
     useEffect(() => {
         getSongs();
     }, [])
 
-    function getSongs(){
+    function getSongs() {
         axios.get('/songs').then(async (res) => {
             setList((res.data)[0])
+            var numPage = (res.data)[1]
+            numPage = numPage / 2 + numPage % 2
+            setItems(numPage)
             setLoad(false)
             console.log('a')
         })
     }
 
+    var buttonCol = (
+        <>
+            {
+
+                Array.from(Array(totalItems)).map((x, index) => {
+                    return (<button type="button" className="btn btn-info" key={index}>{index + 1}</button>)
+                })
+            }
+        </>
+    )
+
     var showList = (
-        <tbody>
+        <>
             {songList.map((x, index) => {
                 const z = arrayBufferToBase64(x.pic.data.data)
                 const imgSrc = "data:image/jpg;base64," + z
@@ -47,7 +62,7 @@ export default function A() {
                     </tr>
                 )
             })}
-        </tbody>
+        </>
     )
 
     function show() {
@@ -104,12 +119,17 @@ export default function A() {
                         <th>Rate</th>
                     </tr>
                 </thead>
-                {showList}
+                <tbody>
+                    {showList}
+                </tbody>
 
             </Table>
 
             {laodingGIF ? <img src={laodingScreen} alt="imag" style={{ width: "370px", height: "250px" }} className="loadingImage" /> : null}
             {newSong ? <Card p1={show} p2={getSongs} /> : null}
+            <section id='buttonCol'>
+                {buttonCol}
+            </section>
         </>
     )
 }
