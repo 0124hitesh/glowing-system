@@ -14,28 +14,21 @@ export default function A() {
     var [newSong, setNewSong] = useState(false);
     var [laodingGIF, setLoad] = useState(true);
     var [totalItems, setItems] = useState();
+    var [curPage, setCurPage] = useState(0);
 
     useEffect(() => {
         getSongs();
     }, [])
 
-    function getSongs() {
-        axios.get('/songs').then(async (res) => {
-            setList((res.data)[0])
-            var numPage = (res.data)[1]
-            numPage = numPage / 2 + numPage % 2
-            setItems(numPage)
-            setLoad(false)
-            console.log('a')
-        })
-    }
-
     var buttonCol = (
         <>
             {
-
                 Array.from(Array(totalItems)).map((x, index) => {
-                    return (<button type="button" className="btn btn-info" key={index}>{index + 1}</button>)
+                    return (
+                        <button type="button" className="btn btn-info" key={index} onClick={pageBtn} value={index + 1}>
+                            {index + 1}
+                        </button>
+                    )
                 })
             }
         </>
@@ -43,9 +36,10 @@ export default function A() {
 
     var showList = (
         <>
-            {songList.map((x, index) => {
+            {songList.slice(curPage, curPage + 2).map((x, index) => {
                 const z = arrayBufferToBase64(x.pic.data.data)
                 const imgSrc = "data:image/jpg;base64," + z
+                // console.log(x.ratings)
                 return (
                     <tr key={index}>
                         <td><img src={imgSrc} alt="imag" style={{ width: "100px", height: "100px" }} /></td>
@@ -57,13 +51,32 @@ export default function A() {
                                 count={5}
                                 value={x.ratings}
                                 size={24}
-                                activeColor="#ffd700" />
+                                activeColor="#ffd700"
+                            />
                         </td>
                     </tr>
                 )
             })}
         </>
     )
+
+    function pageBtn(e) {
+        var x = e.target.value;
+        x = (x - 1) * 2
+        setCurPage(x);
+        // console.log()
+    }
+
+    function getSongs() {
+        axios.get('/songs').then(async (res) => {
+            setList((res.data)[0])
+            var numPage = (res.data)[1]
+            numPage = numPage / 2 + numPage % 2
+            setItems(numPage)
+            setLoad(false)
+            console.log('a')
+        })
+    }
 
     function show() {
         setNewSong(
