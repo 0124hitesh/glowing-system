@@ -5,7 +5,7 @@ import axios from 'axios';
 import Card from './card';
 import './card.css'
 
-import ReactStars from "react-rating-stars-component";
+import { Rating } from 'react-simple-star-rating'
 import laodingScreen from '../assets/loading.gif'
 
 
@@ -47,12 +47,7 @@ export default function A() {
                         <td>{x.rd}</td>
                         <td>{x.artist}</td>
                         <td>
-                            <ReactStars
-                                count={5}
-                                value={x.ratings}
-                                size={24}
-                                activeColor="#ffd700"
-                            />
+                        <Rating ratingValue={x.ratings*20} readonly size={25} />
                         </td>
                     </tr>
                 )
