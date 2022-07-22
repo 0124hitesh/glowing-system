@@ -6,8 +6,7 @@ import Card from './card';
 import './card.css'
 
 import { Rating } from 'react-simple-star-rating'
-import laodingScreen from '../assets/loading.gif'
-
+import loadingScreen from '../assets/loading.gif'
 
 export default function A() {
     var [songList, setList] = useState([]);
@@ -39,7 +38,6 @@ export default function A() {
             {songList.slice(curPage, curPage + 2).map((x, index) => {
                 const z = arrayBufferToBase64(x.pic.data.data)
                 const imgSrc = "data:image/jpg;base64," + z
-                // console.log(x.ratings)
                 return (
                     <tr key={index}>
                         <td><img src={imgSrc} alt="imag" style={{ width: "100px", height: "100px" }} /></td>
@@ -47,7 +45,7 @@ export default function A() {
                         <td>{x.rd}</td>
                         <td>{x.artist}</td>
                         <td>
-                        <Rating ratingValue={x.ratings*20} readonly size={25} />
+                            <Rating ratingValue={x.ratings * 20} readonly size={25} />
                         </td>
                     </tr>
                 )
@@ -66,7 +64,7 @@ export default function A() {
         axios.get('/songs').then(async (res) => {
             setList((res.data)[0])
             var numPage = (res.data)[1]
-            numPage = numPage / 2 + numPage % 2
+            numPage = parseInt(numPage / 2) + numPage % 2
             setItems(numPage)
             setLoad(false)
             console.log('a')
@@ -133,7 +131,7 @@ export default function A() {
 
             </Table>
 
-            {laodingGIF ? <img src={laodingScreen} alt="imag" style={{ width: "370px", height: "250px" }} className="loadingImage" /> : null}
+            {laodingGIF ? <img src={loadingScreen} alt="imag" style={{ width: "370px", height: "250px" }} className="loadingImage" /> : null}
             {newSong ? <Card p1={show} p2={getSongs} /> : null}
             <section id='buttonCol'>
                 {buttonCol}

@@ -61,7 +61,7 @@ export default function Card(props) {
 
     return (
         <>
-            <section id="insert bordered border-dark container mt-3 ">
+            <section id='insert' className='bordered border-dark container mt-3'>
                 <form>
                     <input type="file" accept="image/png, image/gif, image/jpeg, image/jpg" className="" onChange={setImage} /><br /><br />
                     Artist <input type="text" value={artist} onChange={f_artist}></input><br /><br />
