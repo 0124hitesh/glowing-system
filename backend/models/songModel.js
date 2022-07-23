@@ -4,23 +4,30 @@ const multer = require("multer");
 const songSchema = new mongoose.Schema({
   pic: {
     data: Buffer,
-    contentType: String
+    contentType: String,
+    required: false,
   },
   artist: {
-    type: String
+    type: String,
+    required: true,
   },
   song: {
     type: String,
+    required: true,
     unique: true
   },
   rd: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   ratings: {
-    type: Number
+    type: Number,
+    required: true,
   }
-});
+},
+  {
+    timestamps: true
+  });
 
 const imgstorage = multer.diskStorage({
   destination: function (req, file, callback) {

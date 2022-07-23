@@ -57,11 +57,10 @@ export default function A() {
         var x = e.target.value;
         x = (x - 1) * 2
         setCurPage(x);
-        // console.log()
     }
 
     function getSongs() {
-        axios.get('/songs').then(async (res) => {
+        axios.get('/songAPI/songs').then(async (res) => {
             setList((res.data)[0])
             var numPage = (res.data)[1]
             numPage = parseInt(numPage / 2) + numPage % 2

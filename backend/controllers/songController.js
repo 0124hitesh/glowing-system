@@ -1,38 +1,55 @@
 const fs = require('fs')
-const path = require('path')
+const path = require('path');
+const { nextTick } = require('process');
 
 // sc -- songCollection
-const {sc}= require('../models/songModel')
+const { sc } = require('../models/songModel')
 
 const song = async (req, res) => {
     var arr = [];
-    await sc.find({}).sort({ratings: -1}).then((d) => {
+    await sc.find({}).sort({ ratings: -1 }).then((d) => {
         arr.push(d)
         arr.push(d.length)
     })
-    .catch(() => console.log("error"))
+        .catch(() => console.log("error"))
     res.send(arr);
 }
 
-const newSong = async (req, res) => {
-    if (req.body.artist === '' || req.body.song === '' || req.body.rd === '' || req.body.ratings === '') {
-        res.send("Failed")
-        return;
+const newSong = async (req, res, next) => {
+    const s = req.body.song;
+    const songExists = await sc.findOne({ 'song': s })
+    if (songExists) {
+        res.status(201).send('Song already exists')
+        return
     }
+
+    // for default pic
+    var picData;
+    if (req.file) {
+        picData = await fs.readFileSync(path.join('F:\\glowing-system\\backend\\images\\' + req.file.filename))
+        fs.unlinkSync(path.join('F:\\glowing-system\\backend\\images\\' + req.file.filename))
+    }
+    else
+        picData = fs.readFileSync(path.join('F:\\glowing-system\\backend\\images\\default.png'))
+
+    // insert new song
     const d = new sc({
         pic: {
-            data: fs.readFileSync(path.join('F:\\glowing-system\\backend\\images\\' + req.file.filename)),
-            contentType: req.file.mimetype 
+            data: picData,
+            contentType: req.file ? req.file.mimetype : 'image/png'
         },
         artist: req.body.artist,
         song: req.body.song,
         rd: req.body.rd,
         ratings: req.body.ratings
     })
-    // console.log(d)
-    await d.save();
-    fs.unlinkSync(path.join('F:\\glowing-system\\backend\\images\\' + req.file.filename))
-    res.send("Inserted")
+
+    d.save().then(() => {
+        res.status(200).send("Successfully Inserted")
+    }).catch(() => {
+        // console.log(err)
+        res.status(400).send('Validation Error')
+    });
 }
 
-module.exports = {song, newSong}
+module.exports = { song, newSong }

@@ -1,6 +1,7 @@
 const express = require('express');
 
 const { connectDB } = require('./config/connectDB');
+const { errorHandler, invalidURL } = require('./middlewares/songMiddleware');
 const { songRoutes } = require("./routes/songRoutes");
 
 connectDB()
@@ -26,4 +27,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/', songRoutes)
+app.use('/songAPI', songRoutes)
+app.use(invalidURL)
+app.use(errorHandler)
