@@ -1,6 +1,5 @@
 const fs = require('fs')
 const path = require('path');
-const { nextTick } = require('process');
 
 // sc -- songCollection
 const { sc } = require('../models/songModel')
