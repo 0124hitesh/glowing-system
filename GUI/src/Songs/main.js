@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
-import { Navbar, Container, Table, Form, FormControl, Button } from 'react-bootstrap';
+import { Container, Table, Button } from 'react-bootstrap';
 import axios from 'axios';
 import Card from './card';
 import './card.css'
@@ -8,7 +8,8 @@ import './card.css'
 import { Rating } from 'react-simple-star-rating'
 import loadingScreen from '../assets/loading.gif'
 
-export default function A() {
+export default function SongData() {
+    const noOfPages = 2;
     var [songList, setList] = useState([]);
     var [newSong, setNewSong] = useState(false);
     var [laodingGIF, setLoad] = useState(true);
@@ -35,7 +36,7 @@ export default function A() {
 
     var showList = (
         <>
-            {songList.slice(curPage, curPage + 2).map((x, index) => {
+            {songList.slice(curPage, curPage + noOfPages).map((x, index) => {
                 const z = arrayBufferToBase64(x.pic.data.data)
                 const imgSrc = "data:image/jpg;base64," + z
                 return (
@@ -85,29 +86,8 @@ export default function A() {
 
     return (
         <>
-            <Navbar bg="light" variant="light">
-                <Container>
-                    <Navbar.Brand href="#home">Home</Navbar.Brand>
-
-                    {/* <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                    </Nav> */}
-
-                    <Form className="d-flex">
-                        <FormControl
-                            type="search"
-                            placeholder="Search"
-                            className="me-2"
-                            aria-label="Search"
-                        />
-                        <Button variant="outline-success">Search</Button>
-                    </Form>
-                </Container>
-            </Navbar>
-            <br />
-
             <Container className="container d-flex justify-content-between">
-                <article className='p-md-3'>Top 10 Songs</article>
+                <article className='p-md-3'>Songs (sort by rating)</article>
                 <Button variant="primary" size="lg" active onClick={show}>
                     + ADD SONG
                 </Button>

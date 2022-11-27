@@ -5,6 +5,6 @@ const { upload } = require('../models/songModel');
 const songRoutes =express.Router();
 
 songRoutes.route('/songs').get(song)
-songRoutes.route('/newSong').post(upload.single("pic"), newSong)
+songRoutes.route('/newSong').post(newSong)
 
 module.exports = {songRoutes}

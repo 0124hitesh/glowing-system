@@ -59,18 +59,21 @@ export default function Card(props) {
 
     return (
         <>
-            <section id='insert' className='bordered border-dark container mt-3'>
+            <section id='insert' className='bordered border-dark container'>
                 <form>
-                    <input type="file" accept="image/png, image/gif, image/jpeg, image/jpg" className="" onChange={setImage} /><br /><br />
-                    Artist <input type="text" value={artist} onChange={f_artist}></input><br /><br />
-                    Song <input type="text" value={song} onChange={f_song}></input><br /><br />
+                    <section>
+                        <input type="file" accept="image/png, image/gif, image/jpeg, image/jpg" className="" onChange={setImage} />
+                        <img src={imgSrc} alt="imag" id="" style={{ width: "100px", height: "100px" }} />
+                    </section><br/>
+                    Artist<input type="text" value={artist} onChange={f_artist}></input><br/>
+                    Song <input type="text" value={song} onChange={f_song}></input><br />
                     Release Date <input type="date" value={rd} onChange={f_rd}></input><br /><br />
                     Ratings <input type="number" max={5} min={1} value={ratings} onChange={f_ratings}></input><br /><br />
                     <button type="button" onClick={props.p1}>Cancel </button>
                     <span> </span>
                     <button type="button" onClick={addSong}> ADD USER</button>
                 </form>
-                <img src={imgSrc} alt="imag" style={{ width: "100px", height: "100px" }} />
+
 
             </section>
         </>

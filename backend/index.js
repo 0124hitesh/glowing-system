@@ -3,6 +3,8 @@ const express = require('express');
 const { connectDB } = require('./config/connectDB');
 const { errorHandler, invalidURL } = require('./middlewares/songMiddleware');
 const { songRoutes } = require("./routes/songRoutes");
+const {userRoutes} = require('./routes/userRoutes.js')
+
 
 connectDB()
 const app = express();
@@ -16,10 +18,10 @@ app.use(express.urlencoded({ extended: true }))
 // for parsing application/json
 app.use(express.json())
 
-// const formData = require("express-form-data");
-// for parsing multipart/form-data
-// app.use(formData.parse())
-// app.use(formData.union())
+const formData = require("express-form-data");
+app.use(formData.parse());
+app.use(formData.stream());
+app.use(formData.union())
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -28,5 +30,6 @@ app.use(function (req, res, next) {
 });
 
 app.use('/songAPI', songRoutes)
+app.use('/api/users', userRoutes)
 app.use(invalidURL)
 app.use(errorHandler)

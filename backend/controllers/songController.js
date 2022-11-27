@@ -15,6 +15,7 @@ const song = async (req, res) => {
 }
 
 const newSong = async (req, res, next) => {
+    console.log("new Song called")
     const s = req.body.song;
     const songExists = await sc.findOne({ 'song': s })
     if (songExists) {
@@ -24,9 +25,11 @@ const newSong = async (req, res, next) => {
 
     // for default pic
     var picData;
-    if (req.file) {
-        picData = await fs.readFileSync(path.join('F:\\glowing-system\\backend\\images\\' + req.file.filename))
-        fs.unlinkSync(path.join('F:\\glowing-system\\backend\\images\\' + req.file.filename))
+    if (req.body.pic.path) {
+        picData = await fs.readFileSync(path.join(req.body.pic.path));
+
+        // picData = await fs.readFileSync(path.join('F:\\glowing-system\\backend\\images\\' + req.file.filename))
+        // fs.unlinkSync(path.join('F:\\glowing-system\\backend\\images\\' + req.file.filename))
     }
     else
         picData = fs.readFileSync(path.join('F:\\glowing-system\\backend\\images\\default.png'))

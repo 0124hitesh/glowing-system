@@ -1,10 +1,9 @@
-import A from './Songs/main'
-import Card from './Songs/card';
+import Home from './screens/Home/home'
 
 function App() {
   return (
-   <>
-      <A/>
+    <>
+      <Home />
     </>
   );
 }

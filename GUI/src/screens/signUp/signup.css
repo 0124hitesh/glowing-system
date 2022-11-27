@@ -1,0 +1,121 @@
+input[type="text"], input[type="password"], input[type="email"]{
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid rgb(169,169,169,.4);
+    padding: 13px 3px;
+    font-family: Arial, Helvetica, sans-serif;     
+    font-size: medium;   
+}
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus{
+    outline-style: none;
+    border-bottom: 1.5px solid rgba(0, 38, 255, 0.849);
+}
+input:focus + .sp, input:not(:placeholder-shown) + .sp {
+    transform:  translateY(-92%) translateX(2px);
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(0, 38, 255, 0.849);
+    margin-top: 5px;
+    transition: .4s;
+}
+.ph{
+    position: relative;
+    width: 80%;
+    margin: 0 auto;
+}
+.sp{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.b{
+    width: 350px;
+    height: 475px;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+    margin-bottom: 25px;
+    box-shadow: 2px 2px 6px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+}
+.b h2{
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    text-align: center;  
+    color: deeppink;      
+    font-size: 40px;
+}    
+.b #art1{
+    width: 80%;
+    margin: 0 auto;
+    font-size: 12px;
+}
+.b #art1 a{
+    color: rgb(42, 185, 233);
+    text-decoration: none;
+    font-size: 12px;
+}
+.b #signup{
+    display: block;
+    float: left;
+    text-decoration: none;
+    padding: 8px 13px;
+    background-color: deeppink;
+    margin-left: 10%;
+    border-radius: 18px;
+    color: white;
+    font-weight: 500;
+    margin-right: 15px;
+    box-shadow: 0 2px rgba(0,0,0,.2);
+}
+.b p{
+    padding: 8px;
+    font-size: 15px;
+}
+.b a{
+    text-decoration: none;
+    font-size: 17px;
+    color: rgb(70, 181, 218);
+}
+.b #art2{
+    position: absolute;
+    bottom: 0;
+    height: 20%;
+    width: 100%;
+    background-color: rgb(144, 176, 219);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+#profile_img{
+    margin-left: 60%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+#selectImg:hover{
+    cursor: pointer;
+}
+#selectImg{
+    margin-left: 60%;
+    position: absolute;
+    top: 85px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    opacity: 0;
+}
+#profile_img_loggedIn{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
